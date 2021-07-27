@@ -1,12 +1,13 @@
 [tool.poetry]
 name = "multimv"
-version = "0.2.0"
+version = "0.5.0"
 description = "Multi mv via fixed string / regex / bash pattern substitutions"
 authors = ["Summer"]
 license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.6"
+click = "^8.0.1"
 
 [tool.poetry.scripts]
 multimv = 'multimv:main'
