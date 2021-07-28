@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "multimv"
-version = "0.5.0"
+version = "0.6.0"
 description = "Multi mv via fixed string / regex / bash pattern substitutions"
 authors = ["Summer"]
 license = "MIT"

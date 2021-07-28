@@ -20,21 +20,29 @@ def main(ctx, dry_run):
 
 @main.command()
 @click.option("-g", "--global", "global_", is_flag=True)
-@click.option("--eval", "eval_", is_flag=True)
+@click.option("--fstring", "fstring", is_flag=True)
 @click.argument("pattern")
 @click.argument("replacement")
 @click.argument("files", nargs=-1, type=click.Path())
 @click.pass_context
-def re(ctx, pattern, replacement, files, eval_, global_):
-    if eval_:
-        repl = replacement
+def re(ctx, pattern, replacement, files, fstring, global_):
+    if fstring:
+        # This code is too messy
+        if '"""' in replacement and '"""' in replacement:
+            raise Exception("Replacement can't have both ''' and \"\"\"")
+
+        evalstr = "f'''" + replacement + "'''"
+        if "'''" in replacement:
+            evalstr = 'f"""' + replacement + '"""'
+
         def replacement(match):
             local = {
                 "m0": match.group(0),
                 **{f"m{i}": g for i, g in enumerate(match.groups(), 1)},
                 **match.groupdict(),
+                "m": match,
             }
-            return str(eval(repl, {}, local))
+            return str(eval(evalstr, {}, local))
 
     count = 0 if global_ else 1
     regex = compile(pattern)
