@@ -12,10 +12,12 @@ from .vendor.toposort import toposort
 
 @click.group()
 @click.option("-n", "--dry-run", is_flag=True)  # -n is more common
+@click.option("-p", "--parents", is_flag=True)
 @click.pass_context
-def main(ctx, dry_run):
+def main(ctx, dry_run, parents):
     ctx.ensure_object(SimpleNamespace)
     ctx.obj.dry_run = dry_run
+    ctx.obj.parents = parents
 
 
 @main.command()
@@ -73,6 +75,8 @@ def perform_moves(ctx, moves):
             sep="\n",
         )
         if not ctx.obj.dry_run:
+            if ctx.obj.parents:
+                Path(tgt).parent.mkdir(parents=True, exist_ok=True)
             os.rename(src,tgt)
 if __name__ == "__main__":
     main()
