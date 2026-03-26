@@ -1,3 +1,7 @@
+> [!NOTE]
+> Moved to https://tangled.org/summerti.me/multimv/
+
+
 # multimv
 Multi mv via fixed string / regex / bash pattern substitutions
 ## Usage
